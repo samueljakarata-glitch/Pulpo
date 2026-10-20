@@ -1,5 +1,8 @@
 name: Generar videos
 
+# NO VERIFICADO: este flujo no pudo ejecutarse en el entorno donde se escribió
+# (sin acceso a la red de GitHub). El motor minidoc.py sí se probó sin voz.
+
 on:
   workflow_dispatch:
     inputs:
@@ -62,7 +65,7 @@ jobs:
           name: videos
           path: salida/*.mp4
 
-      - name: Publicar en Releases
+      - name: Publicar en Releases (descarga directa desde el celular)
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
