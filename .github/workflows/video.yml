@@ -1,0 +1,71 @@
+name: Generar videos
+
+on:
+  workflow_dispatch:
+    inputs:
+      guion:
+        description: "Archivo del guion (ej: guiones/pulpo.json) o 'todos'"
+        default: "todos"
+  push:
+    paths:
+      - "guiones/**"
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar herramientas
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          pip install edge-tts pillow numpy opencv-python-headless
+
+      - name: Elegir guiones
+        id: g
+        env:
+          EVENTO: ${{ github.event_name }}
+          ANTES: ${{ github.event.before }}
+          ENTRADA: ${{ inputs.guion }}
+        run: |
+          LISTA=""
+          if [ "$EVENTO" = "push" ] && [ "$ANTES" != "0000000000000000000000000000000000000000" ]; then
+            LISTA=$(git diff --name-only --diff-filter=AM "$ANTES" "$GITHUB_SHA" -- 'guiones/*.json' | tr '\n' ' ') || LISTA=""
+          elif [ "$EVENTO" = "workflow_dispatch" ] && [ "$ENTRADA" != "todos" ]; then
+            LISTA="$ENTRADA"
+          fi
+          if [ -z "$LISTA" ]; then
+            LISTA=$(ls guiones/*.json | tr '\n' ' ')
+          fi
+          echo "Guiones a generar: $LISTA"
+          echo "lista=$LISTA" >> "$GITHUB_OUTPUT"
+
+      - name: Generar videos
+        env:
+          LISTA: ${{ steps.g.outputs.lista }}
+        run: python minidoc.py video $LISTA
+
+      - name: Guardar como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: videos
+          path: salida/*.mp4
+
+      - name: Publicar en Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "videos-${{ github.run_number }}" salida/*.mp4 \
+            --title "Videos ${{ github.run_number }}" \
+            --notes "Generados automáticamente."
