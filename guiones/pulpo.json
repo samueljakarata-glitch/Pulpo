@@ -1,0 +1,59 @@
+{
+  "serie": "MINI DOCUMENTAL · EL OCÉANO",
+  "voz": "es-ES-AlvaroNeural",
+  "velocidad": "+0%",
+  "musica": "auto",
+  "escenas": [
+    {
+      "tipo": "gancho",
+      "narracion": "Hay un animal con tres corazones, sangre azul y un cerebro repartido por todo el cuerpo. ¿Cómo es posible?",
+      "pregunta": "¿SABÍAS QUE…?",
+      "lineas": ["3 CORAZONES", "SANGRE AZUL", "CEREBRO EN LOS BRAZOS"]
+    },
+    {
+      "tipo": "numero",
+      "narracion": "Primero, los corazones. El pulpo tiene tres: dos envían sangre a las branquias, y el tercero la reparte por el cuerpo.",
+      "titulo": "Corazones",
+      "numero": 3,
+      "unidad": "corazones",
+      "icono": "corazon",
+      "color": "coral",
+      "detalle": ["2 → bombean a las branquias", "1 → reparte al resto del cuerpo"]
+    },
+    {
+      "tipo": "gotas",
+      "narracion": "Su sangre es azul porque transporta el oxígeno con cobre, no con hierro. Eso le funciona mejor en aguas frías y con poco oxígeno.",
+      "titulo": "¿Por qué azul?",
+      "izquierda": {"etiqueta": "Hierro", "sub": "sangre roja (la nuestra)", "color": "coral"},
+      "derecha": {"etiqueta": "Cobre", "sub": "sangre azul (el pulpo)", "color": "azul"},
+      "nota": "Mejor en aguas frías y con poco oxígeno"
+    },
+    {
+      "tipo": "barras",
+      "narracion": "Y lo más raro: tiene unos quinientos millones de neuronas, y casi dos tercios están en los brazos, no en la cabeza.",
+      "titulo": "≈ 500 millones\nde neuronas",
+      "icono": "cerebro",
+      "partes": [
+        {"etiqueta": "En los 8 brazos", "valor": 65, "color": "turquesa"},
+        {"etiqueta": "En el cerebro central", "valor": 35, "color": "dorado"}
+      ],
+      "nota": "Reparto aproximado"
+    },
+    {
+      "tipo": "pasos",
+      "narracion": "Cada brazo puede tocar, probar sabores y reaccionar casi por su cuenta, sin esperar órdenes del cerebro central.",
+      "titulo": "Cada brazo puede…",
+      "items": [
+        {"icono": "mano", "texto": "Tocar"},
+        {"icono": "gota", "texto": "Probar sabores"},
+        {"icono": "rayo", "texto": "Reaccionar solo"}
+      ]
+    },
+    {
+      "tipo": "final",
+      "narracion": "El pulpo no tiene un jefe único: tiene un equipo. Y nos recuerda que la inteligencia surgió más de una vez, de formas muy distintas.",
+      "frase": "UN EQUIPO,\nNO UN JEFE",
+      "sub": "La inteligencia surgió más de una vez"
+    }
+  ]
+}
